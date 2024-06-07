@@ -7,6 +7,9 @@ import (
 	"myapp/router"
 	"net/http"
 	"os"
+	"time"
+
+	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -36,6 +39,16 @@ func main() {
 	router.SetupEnrollRouter(r, db)
 	//router.SetupLoginRouter(db, jwtSecret)
 	router.SetupLoginRouter(r, db, jwtSecret) // Actualizado
+	// Enable CORS
+	r.Use(cors.Default())
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"*"},
+		AllowHeaders:     []string{"Content-Type", "Content-Length", "Accept-Encoding", "Authorization", "Cache-Control"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	// Iniciar el servidor
 	err = http.ListenAndServe(fmt.Sprintf(":%d", port), r)
