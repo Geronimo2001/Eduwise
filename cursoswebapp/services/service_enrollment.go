@@ -59,3 +59,12 @@ func (s *EnrollmentService) GetAllEnrollments() ([]dtos.EnrollmentsDTO, error) {
 
 	return enrollmentDTOs, nil
 }
+
+// GET INSCRIPCIONES BY ID_USER
+func (s *EnrollmentService) GetEnrollmentsByUserId(name string) ([]models.Enrollment, error) {
+	var enrollments []models.Enrollment
+	if err := s.db.Where("user_id = ?", name).Find(&enrollments).Error; err != nil {
+		return nil, err
+	}
+	return enrollments, nil
+}

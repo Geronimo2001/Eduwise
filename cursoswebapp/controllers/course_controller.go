@@ -89,3 +89,15 @@ func (cc *CourseController) FindCourseByName(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, course)
 }
+
+func (cc *CourseController) SearchCourses(c *gin.Context) {
+	query := c.Query("q")
+
+	courses, err := cc.courseService.SearchCourses(query)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, courses)
+}

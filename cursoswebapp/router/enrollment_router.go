@@ -15,6 +15,7 @@ func SetupEnrollRouter(r *gin.Engine, db *gorm.DB) *gin.Engine {
 	r.POST("/enroll", enrollmentController.EnrollUserInCourse)
 	r.DELETE("/enrollments/:user_id/:course_id", enrollmentController.UnenrollUserFromCourse)
 	r.GET("/enrollments", enrollmentController.GetAllEnrollments)
+	r.GET("/enrollments/user_id/:user_id", enrollmentController.GetEnrollmentsByUserId)
 
 	return r
 }

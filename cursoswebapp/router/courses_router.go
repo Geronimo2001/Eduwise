@@ -16,6 +16,7 @@ func SetupCourseRouter(r *gin.Engine, db *gorm.DB) *gin.Engine {
 	r.PUT("/courses/:id", courseController.UpdateCourse)
 	r.DELETE("/courses/:id", courseController.DeleteCourse)
 	r.GET("/courses/name/:name", courseController.FindCourseByName)
+	r.GET("/courses/search", courseController.SearchCourses)
 
 	return r
 }

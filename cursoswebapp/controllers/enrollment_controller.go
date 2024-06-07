@@ -71,3 +71,13 @@ func (ec *EnrollmentController) GetAllEnrollments(c *gin.Context) {
 
 	c.JSON(http.StatusOK, enrollmentDTOs)
 }
+
+func (ec *EnrollmentController) GetEnrollmentsByUserId(c *gin.Context) {
+	name := c.Param("user_id") // Obtener el parámetro de la URL
+	enrollments, err := ec.EnrollmentService.GetEnrollmentsByUserId(name)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, enrollments)
+}
